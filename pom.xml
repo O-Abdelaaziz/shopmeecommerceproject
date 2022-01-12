@@ -15,4 +15,8 @@
         <maven.compiler.target>15</maven.compiler.target>
     </properties>
 
+    <modules>
+        <module>ShopmeCommon</module>
+    </modules>
+
 </project>
