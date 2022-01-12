@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="ShopmeCommon" />
         <module name="ShopmeBackEnd" />
+        <module name="ShopmeFrontEnd" />
       </profile>
     </annotationProcessing>
   </component>
@@ -15,6 +16,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ShopmeBackEnd" options="-parameters" />
       <module name="ShopmeCommon" options="-parameters" />
+      <module name="ShopmeFrontEnd" options="-parameters" />
       <module name="ShopmeWebParent" options="-parameters" />
     </option>
   </component>
