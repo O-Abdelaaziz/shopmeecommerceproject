@@ -1,5 +1,6 @@
 package com.shopme.admin.service;
 
+import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 
 import java.util.List;
@@ -13,4 +14,9 @@ import java.util.List;
  **/
 public interface IUserService {
     public List<User> listAll();
+
+    public List<Role> listRoles();
+
+    public User save(User user);
+
 }
