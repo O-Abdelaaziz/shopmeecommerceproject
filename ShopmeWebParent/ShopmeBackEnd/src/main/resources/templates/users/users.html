@@ -5,7 +5,10 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>Shopme Admin Control Panel</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/css/all.css}"/>
   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{style.css}"/>
+
   <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
   <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
@@ -59,7 +62,7 @@
 </div>
 <div>
   <h2>Manage Users</h2>
-  <a class="btn btn-primary mb-2" th:href="@{/users/new}">Create New User</a>
+  <a class="btn btn-primary mb-2" th:href="@{/users/new}">Create New User <i class="fas fa-plus"></i></a>
 </div>
 
 <div th:if="${email != null}" class="alert alert-success alert-dismissible fade show" role="alert">
@@ -88,10 +91,13 @@
       <td th:text="${user.firstName}"></td>
       <td th:text="${user.lastName}"></td>
       <td th:text="${user.roles}"></td>
-      <td th:text="${user.enabled}"></td>
-      <td >
-        <button type="button" class="btn btn-success">Update</button>
-        <button type="button" class="btn btn-danger">Delete</button>
+      <td class="text-center">
+        <a th:href="@{/}" th:if="${user.enabled == true}" class="fas fa-check-circle fa-2x icon-dark"></a>
+        <a th:href="@{/}" th:if="${user.enabled == false}" class="fas fa-times-circle fa-2x icon-dark"></a>
+      </td>
+      <td class="text-center">
+        <button type="button" class="btn btn-success">Update <i class="fas fa-pencil-alt"></i></button>
+        <button type="button" class="btn btn-danger">Delete <i class="fas fa-trash-alt"></i></button>
       </td>
     </tr>
     </tbody>
