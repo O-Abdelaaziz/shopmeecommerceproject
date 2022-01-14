@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Create New User</title>
+    <title>[[${pageTitle}]]</title>
     <link th:rel="stylesheet" th:href="@{/izitoast/css/iziToast.css} "/>
     <script th:src="@{/izitoast/js/iziToast.min.js}"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/css/all.css}"/>
@@ -61,8 +61,10 @@
     </nav>
 </div>
 <div>
-    <h2>Manage Users | Create New User</h2>
-    <form th:action="@{/users}" method="post" th:object="${user}" style="max-width: 700px; margin: 0 auto;" onsubmit="return checkIsEmailUnique(this);">
+    <h2>Manage Users | [[${pageTitle}]]</h2>
+    <form th:action="@{/users}" method="post" th:object="${user}" style="max-width: 700px; margin: 0 auto;"
+          onsubmit="return checkIsEmailUnique(this);">
+        <input type="hidden" th:field="*{id}">
         <div class="border border-secondary rounded p-3">
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -92,7 +94,9 @@
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" th:field="*{password}"
+                <input type="password" class="form-control" id="password" minlength="8" maxlength="20" required th:field="*{password}" th:if="${user.id == null}"
+                       placeholder="Enter password">
+                <input type="password" class="form-control" id="password" minlength="8" maxlength="20" th:field="*{password}" th:if="${user.id != null}"
                        placeholder="Enter password">
             </div>
             <div class="form-group">
@@ -115,7 +119,8 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Save <i class="fas fa-save"></i></button>
-            <button type="button" class="btn btn-danger" id="buttonCancel">Cancel <i class="fas fa-times-circle"></i></button>
+            <button type="button" class="btn btn-danger" id="buttonCancel">Cancel <i class="fas fa-times-circle"></i>
+            </button>
             <!--      <button type="button" class="btn btn-danger" onclick='javascript:window.history.back()'>Cancel</button>-->
         </div>
 
@@ -133,19 +138,19 @@
     function checkIsEmailUnique(form) {
         url = "[[@{/users/check-email}]]";
         userEmail = $("#email").val();
+        userId = $("#id").val();
         csrf = $("input[name='_csrf']").val();
-        params = {email: userEmail, _csrf: csrf};
+        params = {id: userId, email: userEmail, _csrf: csrf};
         $.post(url, params, function (response) {
             console.log(response)
             if (response == "OK") {
                 form.submit();
             } else if (response == "Duplicated") {
                 iziToast.show({
-                    timeout: 20000,
                     title: 'Error',
                     message: 'There is another user having same email: ' + userEmail,
                     position: 'bottomCenter',
-                    timeout: 500000,
+                    timeout: 10000,
                     color: 'red'
                 });
             }
@@ -155,7 +160,7 @@
                 title: 'Error',
                 message: 'Could not connect to server',
                 position: 'bottomCenter',
-                timeout: 500000,
+                timeout: 10000,
                 color: 'red'
             });
         })

@@ -1,5 +1,6 @@
 package com.shopme.admin.service;
 
+import com.shopme.admin.exception.UserNotFoundException;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 
@@ -19,5 +20,8 @@ public interface IUserService {
 
     public User save(User user);
 
-    public boolean isEmailUnique(String email);
+    public boolean isEmailUnique(Long id, String email);
+
+    public User get(Long id) throws UserNotFoundException;
+
 }

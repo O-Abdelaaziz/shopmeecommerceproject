@@ -1,5 +1,6 @@
 package com.shopme.admin.service.impl;
 
+import com.shopme.admin.exception.UserNotFoundException;
 import com.shopme.admin.repository.RoleRepository;
 import com.shopme.admin.repository.UserRepository;
 import com.shopme.admin.service.IUserService;
@@ -44,14 +45,42 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User save(User user) {
-        encodePassword(user);
+        boolean isUpdatingUser = (user.getId() != null);
+        if(isUpdatingUser){
+            User exitingUser =userRepository.findById(user.getId()).get();
+
+            if(user.getPassword().isEmpty()){
+                user.setPassword(exitingUser.getPassword());
+            }else{
+                encodePassword(user);
+            }
+        }else{
+            encodePassword(user);
+        }
         return userRepository.save(user);
     }
 
     @Override
-    public boolean isEmailUnique(String email) {
+    public boolean isEmailUnique(Long id, String email) {
         User userByEmail = userRepository.findUserByEmail(email);
-        return userByEmail == null;
+        if (userByEmail == null) return true;
+
+        boolean isCreatingNew = (id == null);
+        if (isCreatingNew) {
+            if (userByEmail != null) return false;
+        } else {
+            if (userByEmail.getId() != id) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public User get(Long id) throws UserNotFoundException {
+        return userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException("could not found user with id: " + id)
+        );
     }
 
     private void encodePassword(User user) {
