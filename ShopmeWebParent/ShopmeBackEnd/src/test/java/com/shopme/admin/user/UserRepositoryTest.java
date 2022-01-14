@@ -37,7 +37,7 @@ public class UserRepositoryTest {
     @Test
     public void testCreateUserWithOneRole() {
         Role role = testEntityManager.find(Role.class, 1L);
-        User user = new User("ouakala", "abdelaaziz", "a.ouakala", "a@a.com", "01234560");
+        User user = new User("ouakala", "abdelaaziz", "a@a.com", "01234560");
         user.addRole(role);
         User savedUser = userRepository.save(user);
         assertThat(savedUser.getId()).isGreaterThan(0);
@@ -46,7 +46,7 @@ public class UserRepositoryTest {
 
     @Test
     public void testCreateUserWithTwoRoles() {
-        User user = new User("ravi2020", "ravi", "kumar", "ravi2020@a.com", "01234560");
+        User user = new User("ravi2020", "ravi", "ravi2020@a.com", "01234560");
         Role roleEditor = new Role(3L);
         Role roleAssistant = new Role(5L);
         user.addRole(roleEditor);
@@ -94,5 +94,12 @@ public class UserRepositoryTest {
     public void testDeleteUser() {
         Long userId = 2L;
         userRepository.deleteById(userId);
+    }
+
+    @Test
+    public void testFindUserByEmail() {
+        String email = "namjavaprogrammer@gmail.com";
+        User user = userRepository.findUserByEmail(email);
+        assertThat(user).isNotNull();
     }
 }

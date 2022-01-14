@@ -50,7 +50,7 @@ public class UserController {
     @PostMapping("/users")
     public String store(User user, RedirectAttributes redirectAttributes) {
         iUserService.save(user);
-        redirectAttributes.addFlashAttribute("username",user.getUsername());
+        redirectAttributes.addFlashAttribute("email",user.getEmail());
         return "redirect:/users";
     }
 }

@@ -19,4 +19,5 @@ public interface IUserService {
 
     public User save(User user);
 
+    public boolean isEmailUnique(String email);
 }
