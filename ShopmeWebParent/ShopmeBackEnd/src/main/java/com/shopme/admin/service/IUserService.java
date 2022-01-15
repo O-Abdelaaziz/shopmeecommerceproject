@@ -24,4 +24,5 @@ public interface IUserService {
 
     public User get(Long id) throws UserNotFoundException;
 
+    public void delete(Long id) throws UserNotFoundException;
 }

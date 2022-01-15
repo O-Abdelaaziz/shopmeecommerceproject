@@ -102,4 +102,11 @@ public class UserRepositoryTest {
         User user = userRepository.findUserByEmail(email);
         assertThat(user).isNotNull();
     }
+
+    @Test
+    public void testCountById() {
+        Long id = 1L;
+        Long countById = userRepository.countById(id);
+        assertThat(countById).isNotNull().isGreaterThan(0);
+    }
 }

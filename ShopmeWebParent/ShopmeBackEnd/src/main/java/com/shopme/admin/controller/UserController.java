@@ -7,6 +7,7 @@ import com.shopme.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,5 +73,16 @@ public class UserController {
             redirectAttributes.addFlashAttribute("message", ex.getMessage());
             return "redirect:/users";
         }
+    }
+
+    @GetMapping("/users/{id}")
+    public String delete(@PathVariable(name = "id") Long id, RedirectAttributes redirectAttributes) throws UserNotFoundException {
+        try {
+            iUserService.delete(id);
+            redirectAttributes.addFlashAttribute("message", "user was deleted successfully");
+        } catch (UserNotFoundException ex) {
+            redirectAttributes.addFlashAttribute("message", ex.getMessage());
+        }
+        return "redirect:/users";
     }
 }

@@ -46,15 +46,15 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User save(User user) {
         boolean isUpdatingUser = (user.getId() != null);
-        if(isUpdatingUser){
-            User exitingUser =userRepository.findById(user.getId()).get();
+        if (isUpdatingUser) {
+            User exitingUser = userRepository.findById(user.getId()).get();
 
-            if(user.getPassword().isEmpty()){
+            if (user.getPassword().isEmpty()) {
                 user.setPassword(exitingUser.getPassword());
-            }else{
+            } else {
                 encodePassword(user);
             }
-        }else{
+        } else {
             encodePassword(user);
         }
         return userRepository.save(user);
@@ -81,6 +81,15 @@ public class UserServiceImpl implements IUserService {
         return userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException("could not found user with id: " + id)
         );
+    }
+
+    @Override
+    public void delete(Long id) throws UserNotFoundException {
+        Long countById = userRepository.countById(id);
+        if (countById == null || countById == 0) {
+            throw new UserNotFoundException("Could not found in user with id:" + id);
+        }
+        userRepository.deleteById(id);
     }
 
     private void encodePassword(User user) {
