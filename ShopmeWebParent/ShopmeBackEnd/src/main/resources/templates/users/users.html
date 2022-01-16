@@ -94,8 +94,8 @@
       <td th:text="${user.lastName}"></td>
       <td th:text="${user.roles}"></td>
       <td class="text-center">
-        <a th:href="@{/}" type="button" th:if="${user.enabled == true}" title="edit this user" class="fas fa-check-circle fa-2x icon-dark"></a>
-        <a th:href="@{/}" type="button" th:if="${user.enabled == false}" class="fas fa-times-circle fa-2x icon-dark"></a>
+        <a th:href="@{'/users/'+ ${user.id} +'/enabled/false'}" type="button" th:if="${user.enabled == true}" title="edit this user" class="fas fa-check-circle fa-2x icon-dark"></a>
+        <a th:href="@{'/users/'+ ${user.id} +'/enabled/true'}" type="button" th:if="${user.enabled == false}" class="fas fa-times-circle fa-2x icon-dark"></a>
       </td>
       <td class="text-center">
         <a th:href="@{'/users/'+${user.id}+ '/edit'}" type="button" class="btn btn-success">Update <i class="fas fa-pencil-alt"></i></a>

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -20,6 +21,7 @@ import java.util.List;
  * @Author Abdelaaziz Ouakala
  **/
 @Service
+@Transactional
 public class UserServiceImpl implements IUserService {
 
     private UserRepository userRepository;
@@ -90,6 +92,11 @@ public class UserServiceImpl implements IUserService {
             throw new UserNotFoundException("Could not found in user with id:" + id);
         }
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateUserEnabledStatus(Long id, boolean enabled) {
+        userRepository.updateEnabledStatus(id, enabled);
     }
 
     private void encodePassword(User user) {
