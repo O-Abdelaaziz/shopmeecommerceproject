@@ -8,6 +8,7 @@ import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -37,12 +38,16 @@ public class UserController {
 
     @GetMapping("/users")
     public String index(Model model) {
-        return indexPagination(1, model);
+        return indexPagination(1, "firstName", "asc", model);
     }
 
     @GetMapping("/users/page/{pageNumber}")
-    public String indexPagination(@PathVariable(name = "pageNumber") int pageNumber, Model model) {
-        Page<User> userPage = iUserService.listByPage(pageNumber);
+    public String indexPagination(
+            @PathVariable(name = "pageNumber") int pageNumber,
+            @Param("sortField") String sortField,
+            @Param("sortDirection") String sortDirection,
+            Model model) {
+        Page<User> userPage = iUserService.listByPage(pageNumber, sortField, sortDirection);
         List<User> userList = userPage.getContent();
 
         long startCount = (pageNumber - 1) * UserServiceImpl.USERS_PER_PAGE + 1;
@@ -50,9 +55,15 @@ public class UserController {
         if (endCount > userPage.getTotalElements()) {
             endCount = userPage.getTotalElements();
         }
+
+        String reverseSortDirection= sortDirection.equals("asc") ? "desc" : "asc";
+
         model.addAttribute("userList", userList);
         model.addAttribute("startCount", startCount);
         model.addAttribute("endCount", endCount);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection", sortDirection);
+        model.addAttribute("reverseSortDirection", reverseSortDirection);
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("totalPages", userPage.getTotalPages());
         model.addAttribute("totalElements", userPage.getTotalElements());

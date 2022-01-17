@@ -29,6 +29,6 @@ public interface IUserService {
 
     public void updateUserEnabledStatus(Long id, boolean enabled);
 
-    public Page<User> listByPage(int pageNumber);
+    public Page<User> listByPage(int pageNumber, String sortField, String sortDirection);
 
 }

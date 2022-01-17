@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ import java.util.List;
 @Service
 @Transactional
 public class UserServiceImpl implements IUserService {
-    public static final int USERS_PER_PAGE=4;
+    public static final int USERS_PER_PAGE = 4;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
@@ -103,8 +104,10 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Page<User> listByPage(int pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber - 1, USERS_PER_PAGE);
+    public Page<User> listByPage(int pageNumber, String sortField, String sortDirection) {
+        Sort sort = Sort.by(sortField);
+        sort = sortDirection.equals("asc") ? sort.ascending() : sort.descending();
+        Pageable pageable = PageRequest.of(pageNumber - 1, USERS_PER_PAGE, sort);
         return userRepository.findAll(pageable);
     }
 

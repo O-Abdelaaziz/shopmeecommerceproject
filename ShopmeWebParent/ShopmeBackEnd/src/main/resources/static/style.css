@@ -1,3 +1,8 @@
 .icon-green{color: green;}
 .icon-dark{color: black;}
 .icon-gray{color: darkgray;}
+
+
+a{
+    text-decoration: none;
+}
