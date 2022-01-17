@@ -1,6 +1,8 @@
 package com.shopme.admin.repository;
 
 import com.shopme.common.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,7 +17,8 @@ import org.springframework.stereotype.Repository;
  * @Author Abdelaaziz Ouakala
  **/
 @Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
+
     @Query("SELECT u FROM User u WHERE u.email = :email")
     public User findUserByEmail(@Param("email") String email);
 

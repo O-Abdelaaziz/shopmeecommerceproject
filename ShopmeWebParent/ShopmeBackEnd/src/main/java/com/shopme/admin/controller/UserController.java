@@ -2,10 +2,12 @@ package com.shopme.admin.controller;
 
 import com.shopme.admin.exception.UserNotFoundException;
 import com.shopme.admin.service.IUserService;
+import com.shopme.admin.service.impl.UserServiceImpl;
 import com.shopme.admin.util.FileUploadUtil;
 import com.shopme.common.entity.Role;
 import com.shopme.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -37,6 +39,25 @@ public class UserController {
     public String index(Model model) {
         List<User> userList = iUserService.listAll();
         model.addAttribute("userList", userList);
+        return "users/users";
+    }
+
+    @GetMapping("/users/page/{pageNumber}")
+    public String indexPagining(@PathVariable(name = "pageNumber") int pageNumber, Model model) {
+        Page<User> userPage = iUserService.listByPage(pageNumber);
+        List<User> userList = userPage.getContent();
+
+        long startCount = (pageNumber - 1) * UserServiceImpl.USERS_PER_PAGE + 1;
+        long endCount = startCount + UserServiceImpl.USERS_PER_PAGE - 1;
+        if (endCount > userPage.getTotalElements()) {
+            endCount = userPage.getTotalElements();
+        }
+        model.addAttribute("userList", userList);
+        model.addAttribute("startCount", startCount);
+        model.addAttribute("endCount", endCount);
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("totalPages", userPage.getTotalPages());
+        model.addAttribute("totalElements", userPage.getTotalElements());
         return "users/users";
     }
 
