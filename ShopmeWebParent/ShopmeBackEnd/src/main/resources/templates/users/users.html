@@ -89,7 +89,7 @@
     <tbody>
     <tr th:class="${user.enabled ? 'table-success' :'table-danger'}" th:each="user :${userList}">
       <th scope="row" th:text="${user.id}">1</th>
-      <td ></td>
+      <td ><img th:if="${user.photo != null}" th:src="@{${user.photosPath}}" style="width: 100px" class="img-fluid img-thumbnail rounded"></td>
       <td th:text="${user.firstName}"></td>
       <td th:text="${user.lastName}"></td>
       <td th:text="${user.roles}"></td>
