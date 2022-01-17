@@ -37,13 +37,11 @@ public class UserController {
 
     @GetMapping("/users")
     public String index(Model model) {
-        List<User> userList = iUserService.listAll();
-        model.addAttribute("userList", userList);
-        return "users/users";
+        return indexPagination(1, model);
     }
 
     @GetMapping("/users/page/{pageNumber}")
-    public String indexPagining(@PathVariable(name = "pageNumber") int pageNumber, Model model) {
+    public String indexPagination(@PathVariable(name = "pageNumber") int pageNumber, Model model) {
         Page<User> userPage = iUserService.listByPage(pageNumber);
         List<User> userList = userPage.getContent();
 

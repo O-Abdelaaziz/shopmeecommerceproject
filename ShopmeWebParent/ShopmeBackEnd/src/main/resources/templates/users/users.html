@@ -126,16 +126,16 @@
 <div class="text-center" th:if="${totalElements>0}">
     <p>Shwoing users # [[${startCount}]] to [[${endCount}]] of [[${totalElements}]]</p>
 </div>
-<div class="text-center" th:unless="${totalElements>0}">
+<div class="text-center" th:unless="${totalElements<1}">
     <p>No Users found</p>
 </div>
 
 <div>
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <li th:class="${currentPage > 1 ? 'page-item' :'page-item disabled'}"><a class="page-link" th:href="@{/users/page/1}">First</a></li>
-            <li th:class="${currentPage > 1 ? 'page-item' :'page-item disabled'}"><a class="page-link" th:href="@{'/users/page/'+${currentPage - 1}}">Previous</a></li>
-            <li th:class="${currentPage == i ? 'page-item active' : 'page-item'}" th:each="i : ${#numbers.sequence(1,totalPages)}"><a class="page-link" th:href="@{'/users/page/'+${i}}">[[${i}]]</a></li>
+            <li th:class="${currentPage > 1 ? 'page-item' :'page-item disabled'}"><a class="page-link" th:href="@{'/users/page/1'}">First</a></li>
+            <li th:class="${currentPage > 1 ? 'page-item' :'page-item disabled'}"><a class="page-link" th:href="@{'/users/page/'+ ${currentPage - 1}}">Previous</a></li>
+            <li th:class="${currentPage != i ? 'page-item' : 'page-item active'}" th:each="i : ${#numbers.sequence(1,totalPages)}"><a class="page-link" th:href="@{'/users/page/' + ${i}}">[[${i}]]</a></li>
             <li th:class="${currentPage < totalPages ? 'page-item' :'page-item disabled'}"><a class="page-link" th:href="@{'/users/page/' + ${currentPage + 1}}">Next</a></li>
             <li th:class="${currentPage < totalPages ? 'page-item' :'page-item disabled'}"><a class="page-link" th:href="@{'/users/page/' + ${totalPages}}">Last</a></li>
         </ul>
