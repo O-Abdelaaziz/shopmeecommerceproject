@@ -74,6 +74,16 @@
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
+<div>
+    <form th:action="@{/users/page/1}" class="form-inline m-3">
+        <input type="hidden" name="sortField"  th:value="${sortField}"/>
+        <input type="hidden" name="sortDirection" th:value="${sortDirection}"/>
+        <label for="filter">Filter: &nbsp; </label>
+        <input type="search" name="keyword" id="filter" class="form-control">&nbsp;&nbsp;
+        <input type="submit" value="Search" class="btn btn-primary"/>&nbsp;
+        <input type="button" value="Clear" class="btn btn-secondary" onclick="clearFilter()"/>
+    </form>
+</div>
 <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover">
         <thead class="thead-dark">
@@ -83,12 +93,12 @@
             <th scope="col">
                 <a
                         th:if="${sortField} != 'firstName'"
-                        th:href="@{'/users/page/'+ ${currentPage} + '?sortField=firstName' + '&sortDirection='+${sortDirection}}"
+                        th:href="@{'/users/page/'+ ${currentPage} + '?sortField=firstName' + '&sortDirection='+${sortDirection} + ${keyword != null ? '&keyword='+ keyword: ''} }"
                         class="text-white"
                 >First Name</a>
                 <a
                         th:if="${sortField} == 'firstName'"
-                        th:href="@{'/users/page/'+ ${currentPage} + '?sortField=firstName' + '&sortDirection='+${reverseSortDirection}}"
+                        th:href="@{'/users/page/'+ ${currentPage} + '?sortField=firstName' + '&sortDirection='+${reverseSortDirection} + ${keyword != null ? '&keyword='+ keyword: ''} }"
                         class="text-white"
                 >First Name</a>
                 <span
@@ -99,12 +109,12 @@
             <th scope="col">
                 <a
                         th:if="${sortField} != 'lastName'"
-                        th:href="@{'/users/page/'+ ${currentPage} + '?sortField=lastName' + '&sortDirection='+${sortDirection}}"
+                        th:href="@{'/users/page/'+ ${currentPage} + '?sortField=lastName' + '&sortDirection='+${sortDirection} + ${keyword != null ? '&keyword='+ keyword: ''}}"
                         class="text-white"
                 >First Name</a>
                 <a
                         th:if="${sortField} == 'lastName'"
-                        th:href="@{'/users/page/'+ ${currentPage} + '?sortField=lastName' + '&sortDirection='+${reverseSortDirection}}"
+                        th:href="@{'/users/page/'+ ${currentPage} + '?sortField=lastName' + '&sortDirection='+${reverseSortDirection} + ${keyword != null ? '&keyword='+ keyword: ''}}"
                         class="text-white"
                 >Last Name</a>
                 <span
@@ -116,12 +126,12 @@
             <th scope="col">
                 <a
                         th:if="${sortField} != 'enabled'"
-                        th:href="@{'/users/page/'+ ${currentPage} + '?sortField=enabled' + '&sortDirection='+${sortDirection}}"
+                        th:href="@{'/users/page/'+ ${currentPage} + '?sortField=enabled' + '&sortDirection='+${sortDirection} + ${keyword != null ? '&keyword='+ keyword: ''}}"
                         class="text-white"
                 >Enabled</a>
                 <a
                         th:if="${sortField} == 'enabled'"
-                        th:href="@{'/users/page/'+ ${currentPage} + '?sortField=enabled' + '&sortDirection='+${reverseSortDirection}}"
+                        th:href="@{'/users/page/'+ ${currentPage} + '?sortField=enabled' + '&sortDirection='+${reverseSortDirection} + ${keyword != null ? '&keyword='+ keyword: ''}}"
                         class="text-white"
                 >First Name</a>
                 <span
@@ -168,14 +178,14 @@
     </table>
 </div>
 
-<div class="text-center" th:if="${totalElements>0}">
+<div class="text-center" th:if="${totalElements > 0}">
     <p>Shwoing users # [[${startCount}]] to [[${endCount}]] of [[${totalElements}]]</p>
 </div>
-<div class="text-center" th:unless="${totalElements<1}">
+<div class="text-center" th:unless="${totalElements > 0}">
     <p>No Users found</p>
 </div>
 
-<div>
+<div th:if="${totalPages > 1}">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li th:class="${currentPage > 1 ? 'page-item' :'page-item disabled'}"><a class="page-link"
@@ -230,6 +240,10 @@
             $('#confirmModal').modal();
         });
     });
+
+    function clearFilter(){
+        window.location = "[[@{/users}]]"
+    }
 </script>
 </body>
 </html>

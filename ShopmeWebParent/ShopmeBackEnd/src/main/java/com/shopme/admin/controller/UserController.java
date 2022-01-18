@@ -38,16 +38,17 @@ public class UserController {
 
     @GetMapping("/users")
     public String index(Model model) {
-        return indexPagination(1, "firstName", "asc", model);
+        return indexPagination(null, 1, "firstName", "asc", model);
     }
 
     @GetMapping("/users/page/{pageNumber}")
     public String indexPagination(
+            @Param("keyword") String keyword,
             @PathVariable(name = "pageNumber") int pageNumber,
             @Param("sortField") String sortField,
             @Param("sortDirection") String sortDirection,
             Model model) {
-        Page<User> userPage = iUserService.listByPage(pageNumber, sortField, sortDirection);
+        Page<User> userPage = iUserService.listByPage(keyword, pageNumber, sortField, sortDirection);
         List<User> userList = userPage.getContent();
 
         long startCount = (pageNumber - 1) * UserServiceImpl.USERS_PER_PAGE + 1;
@@ -56,9 +57,10 @@ public class UserController {
             endCount = userPage.getTotalElements();
         }
 
-        String reverseSortDirection= sortDirection.equals("asc") ? "desc" : "asc";
+        String reverseSortDirection = sortDirection.equals("asc") ? "desc" : "asc";
 
         model.addAttribute("userList", userList);
+        model.addAttribute("keyword", keyword);
         model.addAttribute("startCount", startCount);
         model.addAttribute("endCount", endCount);
         model.addAttribute("sortField", sortField);
