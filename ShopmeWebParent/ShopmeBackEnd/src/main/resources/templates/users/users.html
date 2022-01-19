@@ -66,8 +66,9 @@
 <div>
     <h2>Manage Users</h2>
     <a class="btn btn-primary mb-2" th:href="@{/users/new}">Create New User <i class="fas fa-plus"></i></a>
-    &nbsp;| &nbsp;
-    <a th:href="@{/users/export/csv}">Export to csv</a>
+    <a class="btn btn-primary mb-2" th:href="@{/users/export/csv}" data-toggle="tooltip" data-placement="top" title="Export To CSV"><i class="fa fa-file-csv"></i></a>
+    <a class="btn btn-primary mb-2" th:href="@{/users/export/excel}" data-toggle="tooltip" data-placement="top" title="Export To Excel"><i class="fa fa-file-excel"></i></a>
+    <a class="btn btn-primary mb-2" th:href="@{/users/export/pdf}" data-toggle="tooltip" data-placement="top" title="Export To PDF"><i class="fa fa-file-pdf"></i></a>
 </div>
 
 <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show" role="alert"
