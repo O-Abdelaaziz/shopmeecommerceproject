@@ -66,6 +66,8 @@
 <div>
     <h2>Manage Users</h2>
     <a class="btn btn-primary mb-2" th:href="@{/users/new}">Create New User <i class="fas fa-plus"></i></a>
+    &nbsp;| &nbsp;
+    <a th:href="@{/users/export/csv}">Export to csv</a>
 </div>
 
 <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show" role="alert"
