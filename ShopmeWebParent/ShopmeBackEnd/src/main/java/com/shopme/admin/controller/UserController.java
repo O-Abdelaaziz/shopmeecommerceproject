@@ -99,10 +99,13 @@ public class UserController {
             if (user.getPhoto().isEmpty()) user.setPhoto(null);
             iUserService.save(user);
         }
-
-
         redirectAttributes.addFlashAttribute("message", "The User with email: <strong>" + user.getEmail() + "</strong> has been saved successfully.");
-        return "redirect:/users";
+        return getRedirectedUrlToAffectedUser(user);
+    }
+
+    private String getRedirectedUrlToAffectedUser(User user) {
+        String firstPartEmail = user.getEmail().split("@")[0];
+        return "redirect:/users/page/1?sortField=id&sortDirection=asc&keyword=" + firstPartEmail;
     }
 
     @GetMapping("/users/{id}/edit")

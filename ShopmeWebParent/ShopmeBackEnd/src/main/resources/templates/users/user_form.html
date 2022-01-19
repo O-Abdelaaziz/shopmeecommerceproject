@@ -105,8 +105,7 @@
                 <label>Roles</label>
                 <div class="col-sm-12">
                     <th:block th:each="role : ${roles}">
-                        <input class="m-2" type="checkbox" th:field="*{roles}" th:text="${role.name}"
-                               th:value="${role.id}"/>-
+                        <input class="m-2" type="checkbox" th:field="*{roles}" th:text="${role.name}" th:value="${role.id}"/>-
                         <small>[[${role.description}]]</small>
                         </br>
                     </th:block>
