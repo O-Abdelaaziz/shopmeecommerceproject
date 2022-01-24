@@ -63,7 +63,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 .and()
                 .logout()
-                .logoutSuccessUrl("/");
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout");
+//                .invalidateHttpSession(true)
+//                .deleteCookies("JSESSIONID");
     }
 
     @Override

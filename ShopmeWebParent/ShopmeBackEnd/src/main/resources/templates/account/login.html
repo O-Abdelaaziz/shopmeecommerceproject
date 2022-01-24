@@ -12,8 +12,11 @@
     <img th:src="@{/images/ShopmeAdminSmall.png}" alt="shopme">
 </div>
 <form th:action="@{/login}" th:method="post" style="max-width: 350px; margin: 0 auto;">
-    <div th:if="${param.error}">
+    <div th:if="${param.error}" class="text text-center">
         <p class="text text-danger"> [[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+    </div>
+    <div th:if="${param.logout}" class="text text-center">
+        <p class="text text-danger"> You have been logged out</p>
     </div>
     <div class="border border-secondary rounded p-3">
         <p>Access to Shopme Adming</p>
