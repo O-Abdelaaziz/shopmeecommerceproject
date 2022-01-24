@@ -64,7 +64,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout");
+                .logoutSuccessUrl("/login?logout")
+                .and()
+                .rememberMe()
+                .key("AbcDefgKLDSLmvop_0123456789")
+                .tokenValiditySeconds(7 * 24 * 60 * 60); // 7 days 24 hours 60 minutes 60 seconds -> 7days ;
 //                .invalidateHttpSession(true)
 //                .deleteCookies("JSESSIONID");
     }
