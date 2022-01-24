@@ -1,8 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:fragment="page_header(page_title)">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>[[${page_title}]]</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/fontawesome/css/all.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{style.css}"/>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
 </head>
 <body>
 
@@ -21,5 +30,9 @@
 <!--    a tag pagination fragment-->
 <a class="page-link" th:fragment="page_link(pageNumber,pageName)"
    th:href="@{'/users/page/'+${pageNumber} + '?sortField='+ ${sortField} + '&sortDirection='+${sortDirection} + ${keyword != null ? '&keyword='+ keyword: ''} }">[[${pageName}]]</a>
+
+<!--    footer fragment-->
+<div class="text-center" th:fragment="footer"><p>Shopme Control Panel - Copyright &copy; Shopme</p></div>
+
 </body>
 </html>
