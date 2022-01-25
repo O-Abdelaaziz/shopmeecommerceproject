@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments :: page_header('index')" />
+<head th:replace="fragments :: page_header('index')"/>
 <body class="container-fluid">
 <div th:replace="navigation ::  menu"/>
 <div>
@@ -48,7 +48,8 @@
                 <label>Roles</label>
                 <div class="col-sm-12">
                     <th:block th:each="role : ${roles}">
-                        <input class="m-2" type="checkbox" th:field="*{roles}" th:text="${role.name}" th:value="${role.id}"/>-
+                        <input class="m-2" type="checkbox" th:field="*{roles}" th:text="${role.name}"
+                               th:value="${role.id}"/>-
                         <small>[[${role.description}]]</small>
                         </br>
                     </th:block>
@@ -80,34 +81,10 @@
     </form>
 </div>
 
-<div class="text-center" th:replace="fragments :: footer" />
+<div class="text-center" th:replace="fragments :: footer"/>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $("#buttonCancel").on("click", function () {
-            window.location = "[[@{/users}]]"
-        });
-
-        $('#fileImage').change(function () {
-            fileSize = this.files[0].size;
-            if (fileSize > 1048576) {
-                this.setCustomValidity("You must choose an image less then 1MB!");
-                this.reportValidity();
-            } else {
-                this.setCustomValidity("");
-                showImageThumbnail(this)
-            }
-        });
-    });
-
-    function showImageThumbnail(fileInput) {
-        let file = fileInput.files[0];
-        let reader = new FileReader();
-        reader.onload = function (e) {
-            $('#thumbnail').attr("src", e.target.result);
-        }
-        reader.readAsDataURL(file);
-    }
+    moduleUrl = "[[@{/users}]]";
 
     function checkIsEmailUnique(form) {
         url = "[[@{/users/check-email}]]";
@@ -142,5 +119,7 @@
         return false
     }
 </script>
+<script th:src="@{/js/common_form.js}"></script>
+
 </body>
 </html>
