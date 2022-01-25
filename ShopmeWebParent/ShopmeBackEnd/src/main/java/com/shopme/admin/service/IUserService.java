@@ -31,4 +31,8 @@ public interface IUserService {
 
     public Page<User> listByPage(String keyword, int pageNumber, String sortField, String sortDirection);
 
+    public User getByEmail(String email);
+
+    public User updateAccount(User userInForm);
+
 }

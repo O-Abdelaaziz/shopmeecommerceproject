@@ -115,6 +115,30 @@ public class UserServiceImpl implements IUserService {
         return userRepository.findAll(pageable);
     }
 
+    @Override
+    public User getByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    @Override
+    public User updateAccount(User userInForm) {
+        User userInDB = userRepository.findById(userInForm.getId()).get();
+
+        if (!userInForm.getPassword().isEmpty()) {
+            userInDB.setPassword(userInForm.getPassword());
+            encodePassword(userInDB);
+        }
+
+        if (userInForm.getPhoto() != null) {
+            userInDB.setPhoto(userInForm.getPhoto());
+        }
+
+        userInDB.setFirstName(userInForm.getFirstName());
+        userInDB.setLastName(userInForm.getLastName());
+
+        return userRepository.save(userInDB);
+    }
+
     private void encodePassword(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
