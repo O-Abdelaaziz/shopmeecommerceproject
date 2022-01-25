@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extars-springsecurity5"
+>
+<head th:replace="fragments :: page_header('Error - Shopme Admin ')"/>
+<body class="container-fluid">
+<div th:replace="navigation ::  menu"/>
+<div class="m-3">
+    <h2>Sorry, the server has encountered an error while processing your request!</h2>
+</div>
+<div class="text-center" th:replace="fragments :: footer" />
+
+</body>
+</html>
