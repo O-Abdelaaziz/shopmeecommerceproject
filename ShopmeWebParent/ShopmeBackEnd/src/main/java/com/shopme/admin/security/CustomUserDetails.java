@@ -28,7 +28,7 @@ public class CustomUserDetails implements UserDetails {
             authorityList.add(new SimpleGrantedAuthority(role.getName()));
         });
 
-        return null;
+        return authorityList;
     }
 
     @Override

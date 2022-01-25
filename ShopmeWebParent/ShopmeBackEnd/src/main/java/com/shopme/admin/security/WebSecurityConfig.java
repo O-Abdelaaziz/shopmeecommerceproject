@@ -53,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/login", "/register", "/logout").permitAll()
+                .antMatchers("/users/**", "/settings/**").hasAuthority("Admin")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
