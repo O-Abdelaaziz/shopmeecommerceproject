@@ -40,6 +40,19 @@ public class Category {
         this.image = "default.png";
     }
 
+    public static Category copyIdAndName(Category category) {
+        Category categoryCopy = new Category();
+        categoryCopy.setId(category.getId());
+        categoryCopy.setName(category.getName());
+        return categoryCopy;
+    }
+    public static Category copyIdAndName(Long id,String name) {
+        Category categoryCopy = new Category();
+        categoryCopy.setId(id);
+        categoryCopy.setName(name);
+        return categoryCopy;
+    }
+
     public Category(String name, Category parent) {
         this(name);
         this.parent = parent;

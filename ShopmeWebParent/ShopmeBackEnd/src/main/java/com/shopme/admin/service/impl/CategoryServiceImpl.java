@@ -34,22 +34,27 @@ public class CategoryServiceImpl implements ICategoryService {
 
         for (Category category : categories) {
             if (category.getParent() == null) {
-                categoryListForm.add(new Category(category.getName()));
+                categoryListForm.add(Category.copyIdAndName(category));
 
                 Set<Category> children = category.getChiidren();
 
                 for (Category subCategory : children) {
-                    String name= "--" + subCategory.getName();
-                    categoryListForm.add(new Category(name));
+                    String name = "--" + subCategory.getName();
+                    categoryListForm.add(Category.copyIdAndName(subCategory.getId(),name));
 
-                    printChildren(categoryListForm,subCategory, 1);
+                    printChildren(categoryListForm, subCategory, 1);
                 }
             }
         }
         return categoryListForm;
     }
 
-    private void printChildren( List<Category> categoryListForm,Category parent, int subLevel) {
+    @Override
+    public Category saveCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    private void printChildren(List<Category> categoryListForm, Category parent, int subLevel) {
         int newSubLevel = subLevel + 1;
         Set<Category> children = parent.getChiidren();
 
@@ -58,9 +63,9 @@ public class CategoryServiceImpl implements ICategoryService {
             for (int i = 0; i < newSubLevel; i++) {
                 name += "--";
             }
-            name+=subCategory.getName();
-            categoryListForm.add(new Category(name));
-            printChildren(categoryListForm,subCategory, newSubLevel);
+            name += subCategory.getName();
+            categoryListForm.add(Category.copyIdAndName(subCategory.getId(),name));
+            printChildren(categoryListForm, subCategory, newSubLevel);
         }
     }
 }
